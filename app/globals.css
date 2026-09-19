@@ -15,3 +15,109 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes shirt-sway {
+  0%,
+  100% {
+    transform: rotate(-1.6deg);
+  }
+  50% {
+    transform: rotate(1.6deg);
+  }
+}
+
+.animate-shirt-sway {
+  transform-origin: 50% 2%;
+  animation: shirt-sway 3.6s ease-in-out infinite;
+}
+
+/* Movimiento de tela: cada capa del SVG de la camiseta se balancea con su propio
+   ritmo y punto de pivote, para que el cuerpo y las mangas no se muevan como un
+   bloque rígido sino como paño colgado. */
+.shirt-fabric {
+  transform-box: fill-box;
+}
+
+@keyframes fabric-fold {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(1.5%, -1%) scale(1.01);
+  }
+}
+
+.shirt-fold {
+  animation: fabric-fold 3.1s ease-in-out infinite;
+  transform-origin: 50% 20%;
+}
+
+@keyframes fabric-sheen {
+  0% {
+    transform: translateX(-15%);
+  }
+  100% {
+    transform: translateX(45%);
+  }
+}
+
+.shirt-sheen {
+  animation: fabric-sheen 4.2s ease-in-out infinite alternate;
+}
+
+@keyframes sleeve-flutter-left {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+.shirt-sleeve-left {
+  animation: sleeve-flutter-left 2.4s ease-in-out infinite;
+  transform-origin: 30% 8%;
+}
+
+@keyframes sleeve-flutter-right {
+  0%,
+  100% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+}
+
+.shirt-sleeve-right {
+  animation: sleeve-flutter-right 2.7s ease-in-out infinite;
+  transform-origin: 70% 8%;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-shirt-sway,
+  .animate-fade-in-up,
+  .shirt-fold,
+  .shirt-sheen,
+  .shirt-sleeve-left,
+  .shirt-sleeve-right {
+    animation: none;
+  }
+}

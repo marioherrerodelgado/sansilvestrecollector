@@ -1,6 +1,7 @@
 import { SHIRTS } from "@/data/shirts";
 import { getShirtImageMap } from "@/lib/images";
 import { GalleryClient } from "@/components/GalleryClient";
+import { Closet } from "@/components/Closet";
 
 export default function HomePage() {
   const images = getShirtImageMap();
@@ -10,12 +11,17 @@ export default function HomePage() {
       <header className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Mis camisetas de la San Silvestre</h1>
         <p className="mt-2 max-w-2xl text-white/60">
-          Una a una, edición a edición: el diseño oficial de cada año y quién ganó la carrera esa Nochevieja.
+          Tu vestidor de la San Silvestre: elige una percha y esa camiseta se adelanta para contarte su historia.
           Sube tu foto y, en un abrir y cerrar de ojos, se convierte en parte de la colección.
         </p>
       </header>
 
-      <GalleryClient shirts={SHIRTS} images={images} />
+      <Closet shirts={SHIRTS} images={images} />
+
+      <div className="mt-14">
+        <h2 className="mb-4 text-xl font-bold text-white">Todas las ediciones</h2>
+        <GalleryClient shirts={SHIRTS} images={images} />
+      </div>
     </div>
   );
 }
