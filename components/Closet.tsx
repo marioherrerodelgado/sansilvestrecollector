@@ -12,6 +12,8 @@ type Props = {
 
 /** Ligero balanceo por percha, como si estuvieran apretadas y apoyadas unas en otras. */
 const LEAN_DEG = [-4, 3, -2, 5, -3, 2, -5, 4];
+/** Ángulo de cámara uniforme del burro (como mirar la percha ligeramente de lado); al seleccionar, de frente. */
+const RACK_TILT_DEG = 13;
 
 export function Closet({ shirts, images }: Props) {
   const sorted = [...shirts].sort((a, b) => b.year - a.year);
@@ -44,9 +46,13 @@ export function Closet({ shirts, images }: Props) {
                     zIndex: isSelected ? 50 : index,
                   }}
                 >
+                  <div className={isSelected ? "" : "w-[68px]"} style={{ perspective: 500 }}>
                   <div
-                    className={`flex flex-col items-center transition-transform duration-500 ${isSelected ? "" : "w-[68px]"}`}
-                    style={{ transform: isSelected ? undefined : `rotate(${lean}deg)` }}
+                    className="flex flex-col items-center transition-transform duration-500"
+                    style={{
+                      transform: isSelected ? "rotateY(0deg) rotateZ(0deg)" : `rotateY(${RACK_TILT_DEG}deg) rotateZ(${lean}deg)`,
+                      transformStyle: "preserve-3d",
+                    }}
                   >
                     <svg
                       viewBox="0 0 28 20"
@@ -75,6 +81,7 @@ export function Closet({ shirts, images }: Props) {
                         className="h-full w-full overflow-visible"
                       />
                     </div>
+                  </div>
                   </div>
                   <span
                     className={`mt-2 rounded-full px-2 py-0.5 text-[10px] font-semibold tabular-nums text-white transition-colors ${

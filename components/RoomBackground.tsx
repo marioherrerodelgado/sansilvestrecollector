@@ -20,26 +20,56 @@ export function RoomBackground({ className }: { className?: string }) {
         <line x1="45" y1="125" x2="170" y2="125" stroke="#a9895f" strokeWidth="6" />
       </g>
 
-      {/* cuadro */}
+      {/* cuadro: medalla de carrera enmarcada */}
       <g>
         <rect x="1040" y="70" width="110" height="130" fill="#faf7f0" stroke="#a9895f" strokeWidth="6" />
-        <circle cx="1095" cy="135" r="26" fill="#c9d3c4" />
+        <path d="M1078,88 L1095,120 L1112,88 Z" fill="#c0392b" />
+        <path d="M1082,88 L1095,124 L1108,88 Z" fill="#a5322a" />
+        <circle cx="1095" cy="150" r="26" fill="#e0b64a" stroke="#b8902e" strokeWidth="3" />
+        <path
+          d="M1095,138 L1099,147 L1109,148 L1101,155 L1104,165 L1095,159 L1086,165 L1089,155 L1081,148 L1091,147 Z"
+          fill="#fff2cc"
+        />
+      </g>
+
+      {/* corcho con dorsal de carrera */}
+      <g>
+        <rect x="30" y="230" width="90" height="66" rx="3" fill="#c9a877" />
+        <g transform="rotate(-4 75 263)">
+          <rect x="42" y="245" width="66" height="36" fill="#fbf8f2" stroke="#2b2b2b" strokeWidth="2" />
+          <text x="75" y="268" fontSize="16" fontWeight="700" textAnchor="middle" fill="#c0392b" fontFamily="Arial, sans-serif">
+            31D
+          </text>
+        </g>
+        <circle cx="75" cy="234" r="2.4" fill="#8a5a2b" />
       </g>
 
       {/* lámpara colgante */}
       <line x1="600" y1="0" x2="600" y2="55" stroke="#3a3a3a" strokeWidth="3" />
       <path d="M578,55 L622,55 L616,80 L584,80 Z" fill="#3a3a3a" />
 
-      {/* alfombra */}
+      {/* alfombra con carriles de pista */}
       <ellipse cx="600" cy="470" rx="300" ry="34" fill="#a9b79c" opacity="0.45" />
       <ellipse cx="600" cy="466" rx="270" ry="28" fill="#b7c2ad" opacity="0.7" />
+      <path d="M340,466 C470,486 730,486 860,466" fill="none" stroke="#e7ecdf" strokeWidth="3" opacity="0.7" />
+      <path d="M340,458 C470,478 730,478 860,458" fill="none" stroke="#e7ecdf" strokeWidth="2" opacity="0.5" />
 
-      {/* planta */}
-      <g>
-        <path d="M1090,430 L1160,430 L1152,490 L1098,490 Z" fill="#bf7a52" />
-        <ellipse cx="1125" cy="385" rx="16" ry="50" fill="#6f8f5a" transform="rotate(-18 1125 385)" />
-        <ellipse cx="1125" cy="380" rx="14" ry="46" fill="#86a86c" transform="rotate(12 1125 380)" />
-        <ellipse cx="1125" cy="378" rx="12" ry="42" fill="#9dbd82" />
+      {/* zapatillas de correr apoyadas junto al burro */}
+      <g transform="translate(1080,452) rotate(-6)">
+        <path
+          d="M0,26 C0,18 7,13 16,11 L54,2 C64,0 73,3 76,10 L78,19 C79,24 76,28 70,28 L6,28 C2,28 0,28 0,26 Z"
+          fill="#3f6f8f"
+        />
+        <path d="M0,26 C10,29 66,29 78,26 L78,29 C66,32 10,32 0,29 Z" fill="#eae4d8" />
+        <line x1="30" y1="14" x2="46" y2="7" stroke="#eae4d8" strokeWidth="2" />
+        <line x1="34" y1="19" x2="50" y2="12" stroke="#eae4d8" strokeWidth="2" />
+      </g>
+      <g transform="translate(1128,458) rotate(4)">
+        <path
+          d="M0,24 C0,17 6,12 15,10 L50,2 C59,0 68,3 70,9 L72,17 C73,22 70,26 65,26 L5,26 C1,26 0,26 0,24 Z"
+          fill="#8a5a2b"
+        />
+        <path d="M0,24 C10,27 60,27 72,24 L72,27 C60,30 10,30 0,27 Z" fill="#eae4d8" />
       </g>
 
       {/* burro / percha de tienda: barra que atraviesa toda la habitación */}
