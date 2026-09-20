@@ -151,9 +151,9 @@ export const SHIRTS: ShirtYear[] = [
   },
   {
     year: 2010,
-    design: "Torso azul claro con mangas grises, diseño minimalista.",
-    color: "#a8c8e6",
-    sleeveColor: "#8a8f96",
+    design: 'Turquesa con mangas raglán negras, "San Silvestre Vallecana 31.12.10" estampado en el pecho.',
+    color: "#12909f",
+    sleeveColor: "#1c1c1e",
     sponsor: "Nike",
     menWinner: { name: "Zersenay Tadese", country: "Eritrea", time: "28:27" },
     womenWinner: { name: "Jéssica Augusto", country: "Portugal", time: "31:59" },
