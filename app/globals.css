@@ -111,6 +111,15 @@ body {
   animation: fade-in-up 0.4s ease-out;
 }
 
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-shirt-sway,
   .animate-fade-in-up,

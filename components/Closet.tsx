@@ -10,6 +10,9 @@ type Props = {
   images: Record<number, string>;
 };
 
+/** Ligero balanceo por percha, como si estuvieran apretadas y apoyadas unas en otras. */
+const LEAN_DEG = [-4, 3, -2, 5, -3, 2, -5, 4];
+
 export function Closet({ shirts, images }: Props) {
   const sorted = [...shirts].sort((a, b) => b.year - a.year);
   const [selectedYear, setSelectedYear] = useState(sorted[0].year);
@@ -20,11 +23,12 @@ export function Closet({ shirts, images }: Props) {
       <div className="relative h-[420px] overflow-hidden rounded-2xl border border-black/10 sm:h-[480px]">
         <RoomBackground className="absolute inset-0 h-full w-full" />
 
-        <div className="absolute inset-x-0 overflow-x-auto overflow-y-visible" style={{ top: "23%" }}>
-          <div className="flex items-end gap-5 px-10 sm:gap-8">
-            {sorted.map((shirt) => {
+        <div className="no-scrollbar absolute inset-x-0 overflow-x-auto overflow-y-visible" style={{ top: "23%" }}>
+          <div className="flex items-end px-10">
+            {sorted.map((shirt, index) => {
               const isSelected = shirt.year === selectedYear;
               const image = images[shirt.year];
+              const lean = LEAN_DEG[index % LEAN_DEG.length];
               return (
                 <button
                   key={shirt.year}
@@ -33,36 +37,44 @@ export function Closet({ shirts, images }: Props) {
                   aria-pressed={isSelected}
                   aria-label={`Camiseta de ${shirt.year}`}
                   className={`group relative flex shrink-0 flex-col items-center bg-transparent transition-all duration-500 ease-out ${
-                    isSelected ? "z-10 -translate-y-6" : "translate-y-0 hover:-translate-y-2 hover:scale-105"
+                    isSelected ? "-translate-y-6" : "translate-y-0 hover:-translate-y-3 hover:scale-110"
                   }`}
-                  style={{ width: isSelected ? 132 : 68 }}
+                  style={{
+                    width: isSelected ? 132 : 46,
+                    zIndex: isSelected ? 50 : index,
+                  }}
                 >
-                  <svg
-                    viewBox="0 0 28 20"
-                    className={`transition-all duration-500 text-[#2b2b2b] ${isSelected ? "h-7 w-9" : "h-[17px] w-[24px] opacity-70"}`}
-                  >
-                    <path
-                      d="M14 2c-2 0-3 1.6-3 3.4 0 1 .4 1.7 1.1 2.3L2 14.6C1 15.2 1.6 17 3 17h22c1.4 0 2-1.8 1-2.4L16.9 7.7c.7-.6 1.1-1.3 1.1-2.3C18 3.6 16 2 14 2z"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    />
-                  </svg>
                   <div
-                    className={`relative -mt-0.5 transition-all duration-500 ${
-                      isSelected
-                        ? "h-[154px] w-[132px] animate-shirt-sway drop-shadow-[0_18px_34px_rgba(0,0,0,0.45)]"
-                        : "h-[92px] w-[68px] drop-shadow-[0_6px_10px_rgba(0,0,0,0.25)]"
-                    }`}
+                    className={`flex flex-col items-center transition-transform duration-500 ${isSelected ? "" : "w-[68px]"}`}
+                    style={{ transform: isSelected ? undefined : `rotate(${lean}deg)` }}
                   >
-                    <RealisticShirt
-                      year={shirt.year}
-                      color={shirt.color}
-                      sleeveColor={shirt.sleeveColor}
-                      image={image}
-                      rich={isSelected}
-                      className="h-full w-full overflow-visible"
-                    />
+                    <svg
+                      viewBox="0 0 28 20"
+                      className={`transition-all duration-500 text-[#2b2b2b] ${isSelected ? "h-7 w-9" : "h-[17px] w-[24px] opacity-70"}`}
+                    >
+                      <path
+                        d="M14 2c-2 0-3 1.6-3 3.4 0 1 .4 1.7 1.1 2.3L2 14.6C1 15.2 1.6 17 3 17h22c1.4 0 2-1.8 1-2.4L16.9 7.7c.7-.6 1.1-1.3 1.1-2.3C18 3.6 16 2 14 2z"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                    <div
+                      className={`relative -mt-0.5 transition-all duration-500 ${
+                        isSelected
+                          ? "h-[154px] w-[132px] animate-shirt-sway drop-shadow-[0_18px_34px_rgba(0,0,0,0.45)]"
+                          : "h-[92px] w-[68px] drop-shadow-[0_6px_10px_rgba(0,0,0,0.25)]"
+                      }`}
+                    >
+                      <RealisticShirt
+                        year={shirt.year}
+                        color={shirt.color}
+                        sleeveColor={shirt.sleeveColor}
+                        image={image}
+                        rich={isSelected}
+                        className="h-full w-full overflow-visible"
+                      />
+                    </div>
                   </div>
                   <span
                     className={`mt-2 rounded-full px-2 py-0.5 text-[10px] font-semibold tabular-nums text-white transition-colors ${
