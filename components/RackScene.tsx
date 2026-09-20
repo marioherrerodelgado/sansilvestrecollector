@@ -17,7 +17,7 @@ type Props = {
 const POLE_LENGTH = 182;
 
 /** Cada percha se inclina un poco distinto, como ropa apretada en un burro real. */
-const LEAN = [6, -4, 7, -5, 4, -6, 5, -4];
+const LEAN = [24, -19, 27, -22, 17, -25, 20, -16];
 
 function Rack({ width }: { width: number }) {
   const half = width / 2;

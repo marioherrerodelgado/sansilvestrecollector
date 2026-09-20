@@ -44,6 +44,30 @@ export function getShirtGeometry(): THREE.ExtrudeGeometry {
     bevelSegments: 2,
   });
   geometry.center();
+
+  // El UVGenerator por defecto de ExtrudeGeometry usa la posición (x,y) tal cual como UV,
+  // sin normalizar a [0,1]: hay que remapearlo a mano o la foto sale recortada/pixelada.
+  const pos = geometry.attributes.position;
+  const uv = geometry.attributes.uv;
+  let minX = Infinity,
+    maxX = -Infinity,
+    minY = Infinity,
+    maxY = -Infinity;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i);
+    const y = pos.getY(i);
+    if (x < minX) minX = x;
+    if (x > maxX) maxX = x;
+    if (y < minY) minY = y;
+    if (y > maxY) maxY = y;
+  }
+  const w = maxX - minX;
+  const h = maxY - minY;
+  for (let i = 0; i < pos.count; i++) {
+    uv.setXY(i, (pos.getX(i) - minX) / w, (pos.getY(i) - minY) / h);
+  }
+  uv.needsUpdate = true;
+
   cachedGeometry = geometry;
   return geometry;
 }
