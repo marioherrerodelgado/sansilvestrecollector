@@ -71,6 +71,18 @@ export function RoomBackground({ className }: { className?: string }) {
         />
         <path d="M0,24 C10,27 60,27 72,24 L72,27 C60,30 10,30 0,27 Z" fill="#eae4d8" />
       </g>
+
+      {/* burro / percha de tienda: barra que atraviesa toda la habitación */}
+      <rect x="0" y="140" width="1200" height="9" rx="4" fill="#3a3a3a" />
+      {[190, 1010].map((x) => (
+        <g key={x}>
+          <circle cx={x} cy="144" r="10" fill="#2b2b2b" />
+          <rect x={x - 5} y="144" width="10" height="272" fill="#2b2b2b" />
+          <rect x={x - 55} y="410" width="110" height="10" rx="5" fill="#2b2b2b" />
+          <circle cx={x - 50} cy="420" r="7" fill="#1c1c1c" />
+          <circle cx={x + 50} cy="420" r="7" fill="#1c1c1c" />
+        </g>
+      ))}
     </svg>
   );
 }
