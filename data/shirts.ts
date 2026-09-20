@@ -93,7 +93,7 @@ export const SHIRTS: ShirtYear[] = [
   {
     year: 2017,
     design:
-      'Azul cielo. La versión Sub-25 llevaba una cabeza de lobo, el año de fundación "1964" y el lema "Forever Stronger".',
+      'Azul. La versión Sub-25 llevaba una cabeza de lobo, el año de fundación "1964" y el lema "Younger · Stronger".',
     color: "#6fb7e0",
     sponsor: "Nike",
     menWinner: { name: "Erick Kiptanui", country: "Kenia", time: "27:34" },
