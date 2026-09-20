@@ -57,6 +57,7 @@ export function Closet({ shirts, images }: Props) {
                   <RealisticShirt
                     year={shirt.year}
                     color={shirt.color}
+                    sleeveColor={shirt.sleeveColor}
                     image={image}
                     rich={isSelected}
                     className="h-full w-full overflow-visible"

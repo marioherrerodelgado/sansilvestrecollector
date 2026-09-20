@@ -4,21 +4,31 @@ const LEFT_SLEEVE_PATH =
   "M60,14 C40,18 18,26 8,42 C4,50 12,58 22,54 C32,50 42,44 54,40 L60,14 Z";
 const RIGHT_SLEEVE_PATH =
   "M140,14 C160,18 182,26 192,42 C196,50 188,58 178,54 C168,50 158,44 146,40 L140,14 Z";
-const FULL_PATH = `${BODY_PATH} ${LEFT_SLEEVE_PATH} ${RIGHT_SLEEVE_PATH}`;
 const COLLAR_PATH = "M82,11 C90,18 110,18 118,11";
 const HEM_PATH = "M58,205 C80,210 120,210 142,205";
 
 type Props = {
   year: number;
   color?: string;
+  /** Color de las mangas, si difiere del torso (p.ej. blanca con mangas azul marino). */
+  sleeveColor?: string;
   image?: string;
   /** El vestidor renderiza 20+ camisetas a la vez; solo la seleccionada merece el coste de las capas de tela animadas. */
   rich?: boolean;
   className?: string;
 };
 
-export function RealisticShirt({ year, color, image, rich = false, className }: Props) {
-  const fill = color ?? "#3f3f46";
+function Fill({ image, color }: { image?: string; color: string }) {
+  return image ? (
+    <image href={image} x="0" y="0" width="200" height="220" preserveAspectRatio="xMidYMid slice" />
+  ) : (
+    <rect x="0" y="0" width="200" height="220" fill={color} />
+  );
+}
+
+export function RealisticShirt({ year, color, sleeveColor, image, rich = false, className }: Props) {
+  const bodyFill = color ?? "#3f3f46";
+  const sleeveFill = sleeveColor ?? bodyFill;
   const uid = `shirt-${year}`;
 
   return (
@@ -32,9 +42,6 @@ export function RealisticShirt({ year, color, image, rich = false, className }: 
         </clipPath>
         <clipPath id={`${uid}-right`}>
           <path d={RIGHT_SLEEVE_PATH} />
-        </clipPath>
-        <clipPath id={`${uid}-full`}>
-          <path d={FULL_PATH} />
         </clipPath>
         <linearGradient id={`${uid}-sheen`} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="white" stopOpacity="0" />
@@ -53,38 +60,28 @@ export function RealisticShirt({ year, color, image, rich = false, className }: 
         )}
       </defs>
 
-      {!rich ? (
-        <g clipPath={`url(#${uid}-full)`}>
-          {image ? (
-            <image href={image} x="0" y="0" width="200" height="220" preserveAspectRatio="xMidYMid slice" />
-          ) : (
-            <rect x="0" y="0" width="200" height="220" fill={fill} />
-          )}
-        </g>
-      ) : (
-        <>
-          <g clipPath={`url(#${uid}-body)`} className="shirt-fabric shirt-fold">
-            {image ? (
-              <image href={image} x="0" y="0" width="200" height="220" preserveAspectRatio="xMidYMid slice" />
-            ) : (
-              <rect x="0" y="0" width="200" height="220" fill={fill} />
-            )}
+      <g clipPath={`url(#${uid}-body)`} className={rich ? "shirt-fabric shirt-fold" : undefined}>
+        <Fill image={image} color={bodyFill} />
+        {rich && (
+          <>
             <rect x="0" y="0" width="200" height="220" filter={`url(#${uid}-weave)`} opacity="0.14" style={{ mixBlendMode: "multiply" }} />
             <rect x="0" y="0" width="200" height="220" fill={`url(#${uid}-crease)`} style={{ mixBlendMode: "multiply" }} />
             <rect x="-60" y="0" width="140" height="220" fill={`url(#${uid}-sheen)`} className="shirt-sheen" style={{ mixBlendMode: "overlay" }} />
-          </g>
+          </>
+        )}
+      </g>
 
-          {(["left", "right"] as const).map((side) => (
-            <g key={side} clipPath={`url(#${uid}-${side})`} className={`shirt-fabric shirt-sleeve-${side}`}>
-              {image ? (
-                <image href={image} x="0" y="0" width="200" height="220" preserveAspectRatio="xMidYMid slice" />
-              ) : (
-                <rect x="0" y="0" width="200" height="220" fill={fill} />
-              )}
-              <rect x="0" y="0" width="200" height="220" filter={`url(#${uid}-weave)`} opacity="0.14" style={{ mixBlendMode: "multiply" }} />
-            </g>
-          ))}
+      {(["left", "right"] as const).map((side) => (
+        <g key={side} clipPath={`url(#${uid}-${side})`} className={rich ? `shirt-fabric shirt-sleeve-${side}` : undefined}>
+          <Fill image={image} color={sleeveFill} />
+          {rich && (
+            <rect x="0" y="0" width="200" height="220" filter={`url(#${uid}-weave)`} opacity="0.14" style={{ mixBlendMode: "multiply" }} />
+          )}
+        </g>
+      ))}
 
+      {rich && (
+        <>
           <path d={COLLAR_PATH} fill="none" stroke="rgba(0,0,0,0.35)" strokeWidth="2.5" strokeLinecap="round" />
           <path d={HEM_PATH} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" strokeLinecap="round" />
         </>

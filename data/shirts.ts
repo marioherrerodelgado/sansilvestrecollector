@@ -8,8 +8,10 @@ export type ShirtYear = {
   year: number;
   /** Descripción del diseño/color de la camiseta oficial de ese año, cuando se conoce. */
   design?: string;
-  /** Color principal de la camiseta (hex), usado para pintarla en el vestidor mientras no tengas foto propia. */
+  /** Color principal (torso) de la camiseta (hex), usado para pintarla en el vestidor mientras no tengas foto propia. */
   color?: string;
+  /** Color de las mangas, cuando difiere del torso (p.ej. camiseta blanca con mangas azul marino). */
+  sleeveColor?: string;
   sponsor?: string;
   menWinner?: Winner;
   womenWinner?: Winner;
@@ -142,6 +144,7 @@ export const SHIRTS: ShirtYear[] = [
     year: 2011,
     design: "Blanca con mangas azul marino, diseño casi idéntico al de 2010.",
     color: "#f2f2ee",
+    sleeveColor: "#1e2a4a",
     sponsor: "Nike",
     menWinner: { name: "Hagos Gebrhiwet", country: "Etiopía", time: "27:57" },
     womenWinner: { name: "Tirunesh Dibaba", country: "Etiopía", time: "31:30" },
@@ -150,6 +153,7 @@ export const SHIRTS: ShirtYear[] = [
     year: 2010,
     design: "Torso azul claro con mangas grises, diseño minimalista.",
     color: "#a8c8e6",
+    sleeveColor: "#8a8f96",
     sponsor: "Nike",
     menWinner: { name: "Zersenay Tadese", country: "Eritrea", time: "28:27" },
     womenWinner: { name: "Jéssica Augusto", country: "Portugal", time: "31:59" },
