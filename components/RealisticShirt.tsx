@@ -1,10 +1,12 @@
 const BODY_PATH =
-  "M60,14 C68,6 92,4 100,4 C108,4 132,6 140,14 L146,40 L146,208 C146,215 142,218 134,218 L66,218 C58,218 54,215 54,208 L54,40 Z";
+  "M72,14 C82,24 90,30 100,30 C110,30 118,24 128,14 L122,42 L126,150 L124,230 C124,237 119,241 112,241 L88,241 C81,241 76,237 76,230 L74,150 L78,42 Z";
 const LEFT_SLEEVE_PATH =
-  "M60,14 C40,18 18,26 8,42 C4,50 12,58 22,54 C32,50 42,44 54,40 L60,14 Z";
+  "M72,14 C60,17 50,22 48,32 L42,70 L46,120 C47,132 50,140 52,144 C56,148 60,150 64,150 C70,150 74,144 72,138 L76,88 L78,42 C77,32 75,22 72,14 Z";
 const RIGHT_SLEEVE_PATH =
-  "M140,14 C160,18 182,26 192,42 C196,50 188,58 178,54 C168,50 158,44 146,40 L140,14 Z";
-const HEM_PATH = "M58,205 C80,210 120,210 142,205";
+  "M128,14 C140,17 150,22 152,32 L158,70 L154,120 C153,132 150,140 148,144 C144,148 140,150 136,150 C130,150 126,144 128,138 L124,88 L122,42 C123,32 125,22 128,14 Z";
+const HEM_PATH = "M76,228 C90,233 110,233 124,228";
+const VIEW_W = 200;
+const VIEW_H = 250;
 
 type Props = {
   year: number;
@@ -19,9 +21,9 @@ type Props = {
 
 function Fill({ image, color }: { image?: string; color: string }) {
   return image ? (
-    <image href={image} x="0" y="0" width="200" height="220" preserveAspectRatio="xMidYMid slice" />
+    <image href={image} x="0" y="0" width={VIEW_W} height={VIEW_H} preserveAspectRatio="xMidYMid slice" />
   ) : (
-    <rect x="0" y="0" width="200" height="220" fill={color} />
+    <rect x="0" y="0" width={VIEW_W} height={VIEW_H} fill={color} />
   );
 }
 
@@ -31,7 +33,7 @@ export function RealisticShirt({ year, color, sleeveColor, image, rich = false, 
   const uid = `shirt-${year}`;
 
   return (
-    <svg viewBox="0 0 200 220" className={className} role="img" aria-label={`Camiseta ${year}`}>
+    <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} className={className} role="img" aria-label={`Camiseta ${year}`}>
       <defs>
         <clipPath id={`${uid}-body`}>
           <path d={BODY_PATH} />
@@ -54,7 +56,7 @@ export function RealisticShirt({ year, color, sleeveColor, image, rich = false, 
           <stop offset="45%" stopColor="white" stopOpacity="0.22" />
           <stop offset="60%" stopColor="white" stopOpacity="0" />
         </linearGradient>
-        <radialGradient id={`${uid}-crease`} cx="50%" cy="35%" r="65%">
+        <radialGradient id={`${uid}-crease`} cx="50%" cy="30%" r="65%">
           <stop offset="0%" stopColor="black" stopOpacity="0.32" />
           <stop offset="100%" stopColor="black" stopOpacity="0" />
         </radialGradient>
@@ -68,12 +70,12 @@ export function RealisticShirt({ year, color, sleeveColor, image, rich = false, 
 
       <g clipPath={`url(#${uid}-body)`} className={rich ? "shirt-fabric shirt-fold" : undefined}>
         <Fill image={image} color={bodyFill} />
-        <rect x="0" y="0" width="200" height="220" fill={`url(#${uid}-light)`} style={{ mixBlendMode: "overlay" }} />
+        <rect x="0" y="0" width={VIEW_W} height={VIEW_H} fill={`url(#${uid}-light)`} style={{ mixBlendMode: "overlay" }} />
         {rich && (
           <>
-            <rect x="0" y="0" width="200" height="220" filter={`url(#${uid}-weave)`} opacity="0.14" style={{ mixBlendMode: "multiply" }} />
-            <rect x="0" y="0" width="200" height="220" fill={`url(#${uid}-crease)`} style={{ mixBlendMode: "multiply" }} />
-            <rect x="-60" y="0" width="140" height="220" fill={`url(#${uid}-sheen)`} className="shirt-sheen" style={{ mixBlendMode: "overlay" }} />
+            <rect x="0" y="0" width={VIEW_W} height={VIEW_H} filter={`url(#${uid}-weave)`} opacity="0.14" style={{ mixBlendMode: "multiply" }} />
+            <rect x="0" y="0" width={VIEW_W} height={VIEW_H} fill={`url(#${uid}-crease)`} style={{ mixBlendMode: "multiply" }} />
+            <rect x="-60" y="0" width="140" height={VIEW_H} fill={`url(#${uid}-sheen)`} className="shirt-sheen" style={{ mixBlendMode: "overlay" }} />
           </>
         )}
       </g>
@@ -81,17 +83,17 @@ export function RealisticShirt({ year, color, sleeveColor, image, rich = false, 
       {(["left", "right"] as const).map((side) => (
         <g key={side} clipPath={`url(#${uid}-${side})`} className={rich ? `shirt-fabric shirt-sleeve-${side}` : undefined}>
           <Fill image={image} color={sleeveFill} />
-          <rect x="0" y="0" width="200" height="220" fill={`url(#${uid}-light)`} style={{ mixBlendMode: "overlay" }} />
+          <rect x="0" y="0" width={VIEW_W} height={VIEW_H} fill={`url(#${uid}-light)`} style={{ mixBlendMode: "overlay" }} />
           {rich && (
-            <rect x="0" y="0" width="200" height="220" filter={`url(#${uid}-weave)`} opacity="0.14" style={{ mixBlendMode: "multiply" }} />
+            <rect x="0" y="0" width={VIEW_W} height={VIEW_H} filter={`url(#${uid}-weave)`} opacity="0.14" style={{ mixBlendMode: "multiply" }} />
           )}
         </g>
       ))}
 
       {/* cuello con volumen: banda del cuello + hueco interior */}
-      <ellipse cx="100" cy="15" rx="19" ry="7" fill={bodyFill} opacity="0.9" />
-      <ellipse cx="100" cy="15.5" rx="14" ry="5.2" fill="black" opacity="0.4" />
-      <ellipse cx="100" cy="14.5" rx="14" ry="5.2" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" />
+      <ellipse cx="100" cy="16" rx="17" ry="6.5" fill={bodyFill} opacity="0.9" />
+      <ellipse cx="100" cy="16.5" rx="12.5" ry="4.8" fill="black" opacity="0.4" />
+      <ellipse cx="100" cy="15.5" rx="12.5" ry="4.8" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" />
 
       {rich && <path d={HEM_PATH} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" strokeLinecap="round" />}
     </svg>
