@@ -62,8 +62,8 @@ export function Closet({ shirts, images }: Props) {
                     <div
                       className={`relative -mt-0.5 transition-all duration-500 ${
                         isSelected
-                          ? "h-[165px] w-[132px] animate-shirt-sway drop-shadow-[0_18px_34px_rgba(0,0,0,0.45)]"
-                          : "h-[85px] w-[68px] drop-shadow-[0_6px_10px_rgba(0,0,0,0.25)]"
+                          ? "h-[128px] w-[132px] animate-shirt-sway drop-shadow-[0_18px_34px_rgba(0,0,0,0.45)]"
+                          : "h-[66px] w-[68px] drop-shadow-[0_6px_10px_rgba(0,0,0,0.25)]"
                       }`}
                     >
                       <RealisticShirt
@@ -71,8 +71,7 @@ export function Closet({ shirts, images }: Props) {
                         color={shirt.color}
                         sleeveColor={shirt.sleeveColor}
                         image={image}
-                        rich={isSelected}
-                        className="h-full w-full overflow-visible"
+                        className="h-full w-full"
                       />
                     </div>
                   </div>
