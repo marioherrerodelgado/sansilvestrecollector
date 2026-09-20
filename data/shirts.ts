@@ -54,8 +54,8 @@ export const SHIRTS: ShirtYear[] = [
   {
     year: 2021,
     design:
-      'Blanca con detalles en color aguamarina y la Puerta de Alcalá como motivo gráfico. Primer año con OYSHO como patrocinador técnico, lema "Volvemos" tras la pandemia.',
-    color: "#eef4f2",
+      'Beige con degradado a verde aguamarina en mangas y bajo, e ilustración de la Puerta de Alcalá con el lema "Volvemos". Primer año con OYSHO como patrocinador técnico tras la pandemia.',
+    color: "#cfc6b3",
     sponsor: "OYSHO",
     menWinner: { name: "Mohamed Katir", country: "España", time: "27:45" },
     womenWinner: { name: "Degitu Azimeraw", country: "Etiopía", time: "30:26" },
@@ -64,8 +64,8 @@ export const SHIRTS: ShirtYear[] = [
   {
     year: 2020,
     design:
-      'Rojo claro con el mensaje "Goodbye 2020!" y el lema "Vallecana solo hay una". Última edición con Nike como patrocinador; carrera disputada en formato virtual por la pandemia.',
-    color: "#e8797a",
+      'Roja con el mensaje "Good Bye 2020!" y el lema "Vallecana solo hay una". Última edición con Nike como patrocinador; carrera disputada en formato virtual por la pandemia.',
+    color: "#901208",
     sponsor: "Nike",
     menWinner: { name: "Daniel Simiu Ebenyo", country: "Kenia", time: "27:41" },
     womenWinner: { name: "Yalemzerf Yehualaw", country: "Etiopía", time: "31:17" },
