@@ -4,9 +4,6 @@ const MASK_URL = "/mockups/white.png";
 
 type Props = {
   year: number;
-  color?: string;
-  /** Color de las mangas, si difiere del torso (p.ej. blanca con mangas azul marino). */
-  sleeveColor?: string;
   image?: string;
   className?: string;
 };
@@ -22,24 +19,29 @@ const maskStyle: CSSProperties = {
   maskPosition: "center",
 };
 
-export function RealisticShirt({ year, color, sleeveColor, image, className }: Props) {
-  const bodyColor = color ?? "#3f3f46";
-  const sleeveFill = sleeveColor ?? bodyColor;
+export function RealisticShirt({ year, image, className }: Props) {
+  if (image) {
+    return (
+      <div className={`relative ${className ?? ""}`} aria-label={`Camiseta ${year}`} role="img">
+        {/* foto real, recortada con la silueta de la plantilla */}
+        <div
+          className="absolute inset-0"
+          style={{ ...maskStyle, backgroundImage: `url(${image})`, backgroundSize: "cover", backgroundPosition: "center" }}
+        />
+      </div>
+    );
+  }
 
+  // Sin foto: PNG pregenerado (scripts/bake_shirt_colors.py) con el color multiplicado
+  // contra los pliegues/brillos reales de la plantilla, ya recortado a la silueta.
+  // Evita blend-mode/opacity/máscaras con alfa gradual en el navegador: en pruebas
+  // renderizaban un patrón de cuadros roto en vez de la plantilla.
   return (
-    <div className={`relative ${className ?? ""}`} aria-label={`Camiseta ${year}`} role="img">
-      {/* color o foto real, recortado con la silueta de la plantilla */}
-      <div
-        className="absolute inset-0"
-        style={{
-          ...maskStyle,
-          backgroundImage: image
-            ? `url(${image})`
-            : `linear-gradient(to right, ${sleeveFill} 0%, ${sleeveFill} 20%, ${bodyColor} 32%, ${bodyColor} 68%, ${sleeveFill} 80%, ${sleeveFill} 100%)`,
-          backgroundSize: image ? "cover" : "100% 100%",
-          backgroundPosition: "center",
-        }}
-      />
-    </div>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`/shirts-generated/${year}.png`}
+      alt={`Camiseta ${year}`}
+      className={`object-contain ${className ?? ""}`}
+    />
   );
 }

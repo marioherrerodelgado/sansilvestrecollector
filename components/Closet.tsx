@@ -72,13 +72,7 @@ export function Closet({ shirts, images }: Props) {
                           : "h-[86px] w-[78px] opacity-60 brightness-[0.55] saturate-[0.7] drop-shadow-[0_8px_14px_rgba(0,0,0,0.5)] group-hover:opacity-90 group-hover:brightness-90"
                       }`}
                     >
-                      <RealisticShirt
-                        year={shirt.year}
-                        color={shirt.color}
-                        sleeveColor={shirt.sleeveColor}
-                        image={image}
-                        className="h-full w-full"
-                      />
+                      <RealisticShirt year={shirt.year} image={image} className="h-full w-full" />
                     </div>
 
                     {/* sombra de suelo, como si un foco cayera sobre la pieza */}
