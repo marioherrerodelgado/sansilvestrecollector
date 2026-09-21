@@ -1,6 +1,5 @@
 import { SHIRTS } from "@/data/shirts";
 import { getShirtImageMap } from "@/lib/images";
-import { GalleryClient } from "@/components/GalleryClient";
 import { Closet } from "@/components/Closet";
 
 export default function HomePage() {
@@ -17,11 +16,6 @@ export default function HomePage() {
       </header>
 
       <Closet shirts={SHIRTS} images={images} />
-
-      <div className="mt-14">
-        <h2 className="mb-4 text-xl font-bold text-white">Todas las ediciones</h2>
-        <GalleryClient shirts={SHIRTS} images={images} />
-      </div>
     </div>
   );
 }
