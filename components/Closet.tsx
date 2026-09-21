@@ -6,17 +6,17 @@ import { RealisticShirt } from "./RealisticShirt";
 
 type Props = {
   shirts: ShirtYear[];
-  images: Record<number, string>;
 };
 
-export function Closet({ shirts, images }: Props) {
+export function Closet({ shirts }: Props) {
   const sorted = [...shirts].sort((a, b) => b.year - a.year);
   const [selectedYear, setSelectedYear] = useState(sorted[0].year);
   const selected = sorted.find((s) => s.year === selectedYear) ?? sorted[0];
 
   return (
-    <div className="space-y-6">
-      <div className="relative h-[460px] overflow-hidden rounded-2xl bg-gradient-to-b from-[#111113] via-[#0a0a0b] to-black sm:h-[540px]">
+    <div className="overflow-hidden rounded-2xl border border-white/10">
+      {/* mismo tono que el fondo horneado en cada PNG (scripts/bake_shirts.py) para que no se note el borde */}
+      <div className="relative h-[460px] bg-[#0a0a0a] sm:h-[540px]">
         {/* lavado de luz ambiental arriba, como en una sala con focos cenitales */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-2/3 bg-[radial-gradient(ellipse_70%_100%_at_50%_0%,rgba(255,255,255,0.06),transparent)]" />
         {/* repisa/zócalo tenue donde "apoyan" las camisetas */}
@@ -26,7 +26,6 @@ export function Closet({ shirts, images }: Props) {
           <div className="flex h-full min-w-max items-end gap-7 px-10 pb-[13%] sm:gap-9 sm:pb-[15%]">
             {sorted.map((shirt) => {
               const isSelected = shirt.year === selectedYear;
-              const image = images[shirt.year];
               return (
                 <button
                   key={shirt.year}
@@ -72,7 +71,7 @@ export function Closet({ shirts, images }: Props) {
                           : "h-[86px] w-[78px] opacity-60 brightness-[0.55] saturate-[0.7] drop-shadow-[0_8px_14px_rgba(0,0,0,0.5)] group-hover:opacity-90 group-hover:brightness-90"
                       }`}
                     >
-                      <RealisticShirt year={shirt.year} image={image} className="h-full w-full" />
+                      <RealisticShirt year={shirt.year} className="h-full w-full" />
                     </div>
 
                     {/* sombra de suelo, como si un foco cayera sobre la pieza */}
@@ -97,44 +96,41 @@ export function Closet({ shirts, images }: Props) {
         </div>
       </div>
 
-      <div
-        key={selected.year}
-        className="animate-fade-in-up rounded-2xl border border-black/5 bg-[#f7f3ea] p-6 text-[#2b2b2b]"
-      >
+      <div key={selected.year} className="animate-fade-in-up border-t border-white/10 bg-[#111113] p-6 sm:p-8">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="text-2xl font-bold">{selected.year}</h2>
+          <h2 className="text-2xl font-bold text-white sm:text-3xl">{selected.year}</h2>
           {selected.sponsor && (
-            <span className="rounded-full bg-black/10 px-2 py-0.5 text-xs uppercase tracking-wide text-black/60">
+            <span className="rounded-full border border-[#e8b74e]/30 bg-[#e8b74e]/10 px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide text-[#e8b74e]">
               {selected.sponsor}
             </span>
           )}
         </div>
 
         {selected.design ? (
-          <p className="mt-3 text-black/80">{selected.design}</p>
+          <p className="mt-3 max-w-3xl text-white/75">{selected.design}</p>
         ) : (
-          <p className="mt-3 italic text-black/40">
+          <p className="mt-3 max-w-3xl italic text-white/40">
             Diseño sin documentar todavía — sube tu foto de {selected.year} como{" "}
-            <code className="text-black/60">public/camisetas/{selected.year}.jpg</code> y cuéntanos cómo era.
+            <code className="text-white/55">public/camisetas/{selected.year}.jpg</code> y cuéntanos cómo era.
           </p>
         )}
 
-        <div className="mt-4 grid gap-1.5 text-sm text-black/70 sm:grid-cols-2">
+        <div className="mt-5 grid gap-2 text-sm text-white/70 sm:grid-cols-2">
           {selected.menWinner && (
             <p>
-              🥇 Masculina: <span className="font-medium text-black">{selected.menWinner.name}</span> ({selected.menWinner.country}
+              🥇 Masculina: <span className="font-medium text-white">{selected.menWinner.name}</span> ({selected.menWinner.country}
               {selected.menWinner.time ? ` · ${selected.menWinner.time}` : ""})
             </p>
           )}
           {selected.womenWinner && (
             <p>
-              🥇 Femenina: <span className="font-medium text-black">{selected.womenWinner.name}</span> ({selected.womenWinner.country}
+              🥇 Femenina: <span className="font-medium text-white">{selected.womenWinner.name}</span> ({selected.womenWinner.country}
               {selected.womenWinner.time ? ` · ${selected.womenWinner.time}` : ""})
             </p>
           )}
         </div>
 
-        {selected.notes && <p className="mt-3 text-sm text-black/40">{selected.notes}</p>}
+        {selected.notes && <p className="mt-3 text-sm text-white/40">{selected.notes}</p>}
       </div>
     </div>
   );
